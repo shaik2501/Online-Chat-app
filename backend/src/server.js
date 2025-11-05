@@ -23,8 +23,8 @@ const CLIENT_BUILD_PATH = path.join(__dirname, '..', 'client', 'dist');
 
 // Middleware
 app.use(cors({
-  origin: 'https://chatguy-dfm6.onrender.com',
-  credentials: true,
+  origin: 'https://chatguy-dfm6.onrender.com',
+  credentials: true,
 }));
 app.use(express.json());
 app.use(cookieParser());
@@ -37,16 +37,18 @@ app.use('/api/chat', chatRoutes);
 // Serve frontend static files
 app.use(express.static(CLIENT_BUILD_PATH));
 
-// Catch-all route for SPA (React/Vite)
-app.get('/*', (req, res) => {
-  if (req.originalUrl.startsWith('/api')) {
-    return res.status(404).json({ message: 'API Endpoint Not Found' });
-  }
-  res.sendFile(path.resolve(CLIENT_BUILD_PATH, 'index.html'));
+// 🔴 FIX APPLIED HERE: Changed '/*' to '*' to avoid PathError on initialization.
+// This serves the SPA index.html for all non-API and non-static file routes.
+app.get('*', (req, res) => {
+  // Important check: Do not interfere with API requests
+  if (req.originalUrl.startsWith('/api')) {
+    return res.status(404).json({ message: 'API Endpoint Not Found' });
+  }
+  res.sendFile(path.resolve(CLIENT_BUILD_PATH, 'index.html'));
 });
 
 // Start server
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-  connectDB();
+  console.log(`Server is running on port ${PORT}`);
+  connectDB();
 });
