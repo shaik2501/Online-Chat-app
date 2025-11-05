@@ -1,6 +1,6 @@
 import axios from "axios";
 
 export const axiosInstance = axios.create({
-    baseURL:"https://online-chat-app-gwep.onrender.com",
+    baseURL:"https://online-chat-app-gwep.onrender.com/api",
     withCredentials:true, //send cookies
 })
