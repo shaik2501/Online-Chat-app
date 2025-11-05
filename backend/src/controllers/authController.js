@@ -111,11 +111,11 @@ export async function login(req,res){
 const token = jwt.sign({userId:user._id},process.env.JWT_SECRET_KEY,{expiresIn:'7d'})
 
 //setting cookie in response
-// 🔴 FIX APPLIED HERE: Changed sameSite from 'strict' to 'None' and set secure: true
+// 🟢 FIX: Ensure sameSite is 'None' and secure is true for cross-origin hosting
 res.cookie('jwt',token,{
   httpOnly:true,
-  sameSite:'None', // FIX: Necessary for cross-site cookie sending (client to API)
-  secure:true, // FIX: Must be true when sameSite is 'None'
+  sameSite:'None',
+  secure:true,
   maxAge:7*24*60*60*1000,//7 days)
 })
 
@@ -134,7 +134,6 @@ export async function logout(req,res){
   res.status(200).json({success:true,message:"Logged out successfully"});
 }
 
-//onboarding function
 // Onboarding function
 export async function onboard(req, res) {
   try {
@@ -188,7 +187,7 @@ export async function onboard(req, res) {
       console.error('Error updating Stream user during onboarding:', streamError.message);
     }
 
-    // ✅ ✅ Send response (THIS WAS MISSING)
+    // ✅ Send response
     res.status(200).json({
       success: true,
       message: 'Onboarding completed successfully',
