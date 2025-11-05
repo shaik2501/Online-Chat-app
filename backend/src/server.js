@@ -1,17 +1,16 @@
-// server.js (Adding a static folder and a fallback route)
-
+// server.js
 import express from 'express';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import cors from "cors";
 
-// 🔴 NOTE: Ensure you import your routes correctly
+// Import routes
 import authRoutes from './routes/authRoute.js';
 import userRoutes from './routes/userRoutes.js';
 import chatRoutes from './routes/chatRoutes.js';
 import { connectDB } from './lib/db.js';
 
-import path from 'path'; // Import path module
+import path from 'path';
 import { fileURLToPath } from 'url';
 
 dotenv.config();
@@ -19,46 +18,46 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Helper for ES Modules (if you're using 'type: module' in package.json)
+// Helper for ES Modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const CLIENT_BUILD_PATH = path.join(__dirname, '..', 'client', 'dist'); // Adjust path as necessary for your setup
+const CLIENT_BUILD_PATH = path.join(__dirname, '..', 'client', 'dist'); // adjust path as per your project
 
 // --- Middleware ---
 app.use(cors({
-  origin: 'https://chatguy-dfm6.onrender.com',
-  credentials: true,
+  origin: 'https://chatguy-dfm6.onrender.com', // your frontend URL
+  credentials: true, // allow cookies to be sent
 }));
-
 app.use(express.json());
 app.use(cookieParser());
 
 // --- API Routes ---
-app.use('/api/auth',authRoutes);
-app.use('/api/users',userRoutes);
-app.use('/api/chat',chatRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/chat', chatRoutes);
 
 // ----------------------------------------------------
-// 🔴 FIX APPLIED HERE: Static files and Client Fallback
+// Serve frontend static files and handle SPA routing
 // ----------------------------------------------------
 
-// 1. Serve static files from the built client application
+// 1. Serve static files from the built client
 app.use(express.static(CLIENT_BUILD_PATH));
 
-// 2. Catch-all route to serve the client-side application for any unhandled routes.
-// This is crucial for client-side routing like /call/:id
+// 2. Catch-all for SPA (React/Vite routes like /call/:id, /chat/:userId)
 app.get('*', (req, res) => {
-    // Check if the request is for an API endpoint that failed (just in case)
+    // If request is for API, return 404
     if (req.originalUrl.startsWith('/api')) {
         return res.status(404).json({ message: 'API Endpoint Not Found' });
     }
-    
-    // Serve the index.html file for client-side routing
+
+    // Otherwise, serve index.html for SPA routing
     res.sendFile(path.resolve(CLIENT_BUILD_PATH, 'index.html'));
 });
 
-
+// ----------------------------------------------------
+// Start server
+// ----------------------------------------------------
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-  connectDB();
+  console.log(`Server is running on port ${PORT}`);
+  connectDB();
 });
