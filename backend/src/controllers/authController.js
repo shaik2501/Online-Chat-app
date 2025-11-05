@@ -62,12 +62,13 @@ console.log(`User synced with Stream successfully ${newUser._id}`);
 const token = jwt.sign({userId:newUser._id},process.env.JWT_SECRET_KEY,{expiresIn:'7d'})
 
 //setting cookie in response
-res.cookie('jwt',token,{
-  httpOnly:true,
-  sameSite:'strict',
-  secure:process.env.NODE_ENV === 'production',
-  maxAge:7*24*60*60*1000,//7 days)
-})
+res.cookie('jwt', token, {
+  httpOnly: true,
+  secure: true,        // must be true for HTTPS
+  sameSite: 'None',    // allows cross-origin
+  maxAge: 7*24*60*60*1000,
+});
+
 
 //fina;ly sending response back to client
 res.status(201).json({success:true,message:'User registered successfully',user:{

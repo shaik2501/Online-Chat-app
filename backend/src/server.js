@@ -14,8 +14,8 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(cors({
-  origin: "https://chatguy-dfm6.onrender.com",
-  credentials:true  //allow frontend to send cookies
+  origin: 'https://chatguy-dfm6.onrender.com', // your deployed frontend
+  credentials: true, // allow cookies to be sent
 }));
 
 
