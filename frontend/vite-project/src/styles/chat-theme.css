@@ -1,0 +1,52 @@
+/*
+ * Custom CSS for Stream Chat to make it look more modern/professional.
+ * This overrides the default 'str-chat__theme-light' styles.
+ */
+
+/* Main Chat Container - ensure it takes full space */
+.str-chat__theme-light {
+    height: 100%;
+    width: 100%;
+    /* Use a clean background, matching the component's card */
+    background-color: #ffffff; 
+}
+
+/* Channel Header Styling */
+.str-chat__header-livestream {
+    border-bottom: 1px solid #e5e7eb; /* Light gray divider */
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05); /* Subtle shadow */
+    padding: 1rem 1.5rem;
+}
+
+/* Message Input Area (Send Box) */
+.str-chat__input-panel {
+    border-top: 1px solid #e5e7eb; /* Light gray divider */
+    padding: 0.75rem 1rem;
+    background-color: #f9fafb; /* Very light background for distinction */
+}
+
+/* Message Text (to make it a little larger/clearer) */
+.str-chat__message-text {
+    font-size: 0.95rem; /* Slightly larger text */
+    line-height: 1.5;
+}
+
+/* Custom Message Bubble Colors (optional, but professional) */
+.str-chat__message-simple-wrapper--received .str-chat__message-simple__actions,
+.str-chat__message-simple-wrapper--received .str-chat__message-simple__text-inner {
+    background-color: #f3f4f6; /* Light gray for received messages */
+    color: #1f2937; /* Dark text */
+    border-radius: 18px 18px 18px 4px;
+}
+
+.str-chat__message-simple-wrapper--mine .str-chat__message-simple__actions,
+.str-chat__message-simple-wrapper--mine .str-chat__message-simple__text-inner {
+    background-color: #3b82f6; /* Blue for sent messages */
+    color: #ffffff; /* White text */
+    border-radius: 18px 18px 4px 18px;
+}
+
+/* Hide the user image on the current user's messages for a cleaner look */
+.str-chat__message-simple-wrapper--mine .str-chat__avatar {
+    display: none;
+}
