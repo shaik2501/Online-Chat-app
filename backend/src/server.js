@@ -14,7 +14,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: 'https://chatguy-dfm6.onrender.com',
   credentials: true, // This enables the server to accept cookies from the specified origin
 }));
 
