@@ -14,8 +14,8 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(cors({
-  origin: 'https://chatguy-dfm6.onrender.com',
-  credentials: true,
+  origin: 'https://chatguy-dfm6.onrender.com',
+  credentials: true, // This enables the server to accept cookies from the specified origin
 }));
 
 
@@ -28,6 +28,6 @@ app.use('/api/users',userRoutes);
 app.use('/api/chat',chatRoutes);
 
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-  connectDB();
+  console.log(`Server is running on port ${PORT}`);
+  connectDB();
 });
