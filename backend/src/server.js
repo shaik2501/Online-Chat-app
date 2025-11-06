@@ -44,9 +44,10 @@ app.use(express.static(CLIENT_BUILD_PATH));
 
 app.use(express.static(CLIENT_BUILD_PATH));
 
-app.get("*", (req, res) => {
+app.get("/*", (req, res) => {
   res.sendFile(path.join(CLIENT_BUILD_PATH, "index.html"));
 });
+
 // Start server
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
