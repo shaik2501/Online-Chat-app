@@ -1,6 +1,7 @@
 import axios from "axios";
 
 export const axiosInstance = axios.create({
-    baseURL:"https://online-chat-app-gwep.onrender.com/api",
-    withCredentials:true, //send cookies
-})
+  baseURL: import.meta.env.VITE_API_URL,
+  withCredentials: true,
+});
+
