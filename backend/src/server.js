@@ -20,7 +20,7 @@ const PORT = process.env.PORT || 3000;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.resolve(); // if using ES module
 
-const CLIENT_BUILD_PATH = path.join(__dirname, "dist");
+const CLIENT_BUILD_PATH = path.join(__dirname, "../dist");
 
 
 // Middleware
@@ -45,10 +45,9 @@ app.use(express.static(CLIENT_BUILD_PATH));
 
 app.use(express.static(CLIENT_BUILD_PATH));
 
-app.get(/.*/, (req, res) => {
+app.get(/^(?!\/api).*/, (req, res) => {
   res.sendFile(path.join(CLIENT_BUILD_PATH, "index.html"));
 });
-
 
 // Start server
 app.listen(PORT, () => {
