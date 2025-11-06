@@ -45,7 +45,7 @@ app.use(express.static(CLIENT_BUILD_PATH));
 
 app.use(express.static(CLIENT_BUILD_PATH));
 
-app.get(/^(?!\/api).*/, (req, res) => {
+app.get("*", (req, res) => {
   res.sendFile(path.join(CLIENT_BUILD_PATH, "index.html"));
 });
 
