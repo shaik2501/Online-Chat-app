@@ -18,8 +18,9 @@ const PORT = process.env.PORT || 3000;
 
 // ES Modules __dirname helper
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const CLIENT_BUILD_PATH = path.join(__dirname, '..', 'client', 'dist'); 
+const __dirname = path.resolve(); // if using ES module
+
+const CLIENT_BUILD_PATH = path.join(__dirname, "frontend", "vite-project", "dist");
 
 // Middleware
 app.use(cors({
@@ -38,11 +39,14 @@ app.use('/api/chat', chatRoutes);
 app.use(express.static(CLIENT_BUILD_PATH));
 
 // 🔴 FIX APPLIED HERE: Changed '/*' to '*' to avoid PathError on initialization.
-// This serves the SPA index.html for all non-API and non-static file routes.
-app.get(/.*/, (req, res) => {
-  res.sendFile(path.join(__dirname, "../dist/index.html"));
-});
 
+
+
+app.use(express.static(CLIENT_BUILD_PATH));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(CLIENT_BUILD_PATH, "index.html"));
+});
 // Start server
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
