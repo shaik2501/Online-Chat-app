@@ -20,7 +20,8 @@ const PORT = process.env.PORT || 3000;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.resolve(); // if using ES module
 
-const CLIENT_BUILD_PATH = path.join(__dirname, "../dist");
+const CLIENT_BUILD_PATH = path.join(__dirname, "./dist");
+
 
 
 // Middleware
