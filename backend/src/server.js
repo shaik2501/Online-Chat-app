@@ -39,12 +39,8 @@ app.use(express.static(CLIENT_BUILD_PATH));
 
 // 🔴 FIX APPLIED HERE: Changed '/*' to '*' to avoid PathError on initialization.
 // This serves the SPA index.html for all non-API and non-static file routes.
-app.get('*', (req, res) => {
-  // Important check: Do not interfere with API requests
-  if (req.originalUrl.startsWith('/api')) {
-    return res.status(404).json({ message: 'API Endpoint Not Found' });
-  }
-  res.sendFile(path.resolve(CLIENT_BUILD_PATH, 'index.html'));
+app.get(/.*/, (req, res) => {
+  res.sendFile(path.join(__dirname, "../dist/index.html"));
 });
 
 // Start server
